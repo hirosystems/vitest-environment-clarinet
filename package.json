@@ -1,0 +1,23 @@
+{
+  "name": "vitest-environment-clarinet",
+  "version": "0.1.1",
+  "description": "A vitest environment to test Clarinet projects",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {},
+  "keywords": [
+    "clarinet",
+    "clarity",
+    "test",
+    "stacks",
+    "vitest"
+  ],
+  "author": "hirosystems",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "vitest": "^0.34.4"
+  },
+  "peerDependencies": {
+    "@hirosystems/clarinet-sdk": "0"
+  }
+}
