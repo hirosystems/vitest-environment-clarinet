@@ -18,10 +18,12 @@ export default {
     };
   },
   async setup(global, options) {
-    const covFileName = options.clarinet.coverageFilename || "lcov.info";
+    const covFilename = options.clarinet.coverageFilename || "lcov.info";
+    const costsFilename = options.clarinet.costsFilename || "costs-reports.json";
 
-    if (options.clarinet.coverage && fs.existsSync(covFileName)) {
-      fs.rmSync(covFileName);
+    if (options.clarinet.coverage) {
+      if (fs.existsSync(covFilename)) fs.rmSync(covFilename);
+      if (fs.existsSync(costsFilename)) fs.rmSync(costsFilename);
     }
 
     const clarityVM = await initVM();
@@ -29,17 +31,26 @@ export default {
     global.testEnvironment = "clarinet";
     global.vm = clarityVM;
     global.coverageReports = [];
+    global.costsReports = [];
     global.options = options;
 
     return {
       async teardown() {
         if (options.clarinet.coverage) {
-          fs.writeFileSync(covFileName, global.coverageReports.join("\n"));
+          fs.writeFileSync(covFilename, global.coverageReports.join("\n"));
+          try {
+            /** @type any[] */
+            const costs = global.costsReports.map((r) => JSON.parse(r)).flat();
+            fs.writeFileSync(costsFilename, JSON.stringify(costs, null, 2));
+          } catch (e) {
+            console.warn(`Failed to write costs reports file.`);
+          }
         }
 
         delete global.testEnvironment;
         delete global.vm;
         delete global.coverageReports;
+        delete global.costsReports;
         delete global.options;
       },
     };
