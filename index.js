@@ -1,7 +1,7 @@
 // @ts-check
 
 import fs from "node:fs";
-import { initVM } from "@hirosystems/clarinet-sdk";
+import { initSimnet } from "@hirosystems/clarinet-sdk";
 
 /** @type import("vitest").Environment */
 export default {
@@ -24,10 +24,10 @@ export default {
     if (options.clarinet.coverage && fs.existsSync(covFilename)) fs.rmSync(covFilename);
     if (options.clarinet.costs && fs.existsSync(costsFilename)) fs.rmSync(costsFilename);
 
-    const clarityVM = await initVM();
+    const simnet = await initSimnet();
 
     global.testEnvironment = "clarinet";
-    global.vm = clarityVM;
+    global.simnet = simnet;
     global.coverageReports = [];
     global.costsReports = [];
     global.options = options;
@@ -48,7 +48,7 @@ export default {
         }
 
         delete global.testEnvironment;
-        delete global.vm;
+        delete global.simnet;
         delete global.coverageReports;
         delete global.costsReports;
         delete global.options;
