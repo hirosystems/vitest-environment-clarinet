@@ -1,6 +1,6 @@
 {
   "name": "vitest-environment-clarinet",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A vitest environment to test Clarinet projects",
   "main": "index.js",
   "type": "module",

@@ -24,7 +24,8 @@ export default {
     if (options.clarinet.coverage && fs.existsSync(covFilename)) fs.rmSync(covFilename);
     if (options.clarinet.costs && fs.existsSync(costsFilename)) fs.rmSync(costsFilename);
 
-    const simnet = await initSimnet();
+    const { manifestPath } = global.options.clarinet;
+    const simnet = await initSimnet(manifestPath);
 
     global.testEnvironment = "clarinet";
     global.simnet = simnet;
