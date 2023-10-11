@@ -1,9 +1,13 @@
 {
   "name": "vitest-environment-clarinet",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "A vitest environment to test Clarinet projects",
   "main": "index.js",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hirosystems/vitest-environment-clarinet"
+  },
   "scripts": {},
   "keywords": [
     "clarinet",
