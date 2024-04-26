@@ -19,13 +19,19 @@ export default {
   },
   async setup(global, options) {
     const covFilename = options.clarinet.coverageFilename || "lcov.info";
-    const costsFilename = options.clarinet.costsFilename || "costs-reports.json";
+    const costsFilename =
+      options.clarinet.costsFilename || "costs-reports.json";
 
-    if (options.clarinet.coverage && fs.existsSync(covFilename)) fs.rmSync(covFilename);
-    if (options.clarinet.costs && fs.existsSync(costsFilename)) fs.rmSync(costsFilename);
+    const { coverage, costs } = options.clarinet;
+
+    if (coverage && fs.existsSync(covFilename)) fs.rmSync(covFilename);
+    if (costs && fs.existsSync(costsFilename)) fs.rmSync(costsFilename);
 
     const { manifestPath } = options.clarinet;
-    const simnet = await initSimnet(manifestPath);
+    const simnet = await initSimnet(manifestPath, false, {
+      trackCosts: costs,
+      trackCoverage: coverage,
+    });
 
     global.testEnvironment = "clarinet";
     global.simnet = simnet;
@@ -35,11 +41,11 @@ export default {
 
     return {
       async teardown() {
-        if (options.clarinet.coverage) {
+        if (coverage) {
           fs.writeFileSync(covFilename, global.coverageReports.join("\n"));
         }
 
-        if (options.clarinet.costs) {
+        if (costs) {
           try {
             const costs = global.costsReports.map((r) => JSON.parse(r)).flat();
             fs.writeFileSync(costsFilename, JSON.stringify(costs, null, 2));
