@@ -19,7 +19,7 @@
   "author": "hirosystems",
   "license": "GPL-3.0",
   "peerDependencies": {
-    "@hirosystems/clarinet-sdk": ">=2.13.0",
+    "@hirosystems/clarinet-sdk": ">=2.14.0",
     "vitest": "^1.0.0 || ^2.0.0 || ^3.0.0"
   }
 }
